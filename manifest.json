@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "Don't Stop Your Hand",
+  "version": "1.0.0",
+  "description": "Prevent video pause when tab loses focus",
+  "icons": {
+    "16": "assets/icon16.png",
+    "32": "assets/icon32.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.missav.ws/*",
+        "*://*.njavtv.com/*",
+        "*://*.missav.live/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["injected.js"],
+      "matches": [
+        "*://*.missav.ws/*",
+        "*://*.njavtv.com/*",
+        "*://*.missav.live/*"
+      ]
+    }
+  ]
+}
