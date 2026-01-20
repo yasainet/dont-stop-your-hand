@@ -12,24 +12,18 @@
   "content_scripts": [
     {
       "matches": [
+        "*://missav.ws/*",
         "*://*.missav.ws/*",
+        "*://missav.live/*",
         "*://*.missav.live/*",
+        "*://missav.ai/*",
         "*://*.missav.ai/*",
+        "*://njavtv.com/*",
         "*://*.njavtv.com/*"
       ],
-      "js": ["content.js"],
-      "run_at": "document_start"
-    }
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": ["injected.js"],
-      "matches": [
-        "*://*.missav.ws/*",
-        "*://*.missav.live/*",
-        "*://*.missav.ai/*",
-        "*://*.njavtv.com/*"
-      ]
+      "js": ["injected.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
     }
   ]
 }

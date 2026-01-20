@@ -1,35 +1,24 @@
 (() => {
   'use strict';
 
+  const BLOCKED_EVENTS = ['blur', 'visibilitychange'];
+
   // Override document visibility properties
-  Object.defineProperty(document, 'hidden', { value: false, writable: false });
-  Object.defineProperty(document, 'visibilityState', { value: 'visible', writable: false });
-
-  // Block visibilitychange event
-  document.addEventListener('visibilitychange', (e) => e.stopImmediatePropagation(), true);
-
-  // Disable Plyr autopause
-  const disableAutopause = () => {
-    if (window.player?.config?.autopause) {
-      window.player.config.autopause = false;
-    }
-    if (typeof Plyr !== 'undefined') {
-      document.querySelectorAll('.plyr').forEach((el) => {
-        if (el.plyr?.config?.autopause) {
-          el.plyr.config.autopause = false;
-        }
-      });
-    }
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', disableAutopause);
-  } else {
-    disableAutopause();
-  }
-
-  new MutationObserver(disableAutopause).observe(document.documentElement, {
-    childList: true,
-    subtree: true,
+  Object.defineProperty(document, 'hidden', {
+    value: false,
+    writable: false,
   });
+  Object.defineProperty(document, 'visibilityState', {
+    value: 'visible',
+    writable: false,
+  });
+
+  // Block event listener registration for blur/visibilitychange
+  const originalAddEventListener = EventTarget.prototype.addEventListener;
+  EventTarget.prototype.addEventListener = function (type, listener, options) {
+    if (BLOCKED_EVENTS.includes(type)) {
+      return;
+    }
+    return originalAddEventListener.call(this, type, listener, options);
+  };
 })();
