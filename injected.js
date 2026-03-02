@@ -21,4 +21,8 @@
     }
     return originalAddEventListener.call(this, type, listener, options);
   };
+  // Remove right sidebar (ads + recommendations)
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.hidden.lg\\:flex.h-full.ml-6.order-last')?.remove();
+  });
 })();
